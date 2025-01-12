@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import GuessInput from "./guess-input";
 
 type GuessGridProps = {
@@ -7,19 +9,18 @@ type GuessGridProps = {
 
 const numberOfGuesses = 6;
 
-const guessBox = (
-  <div>
-    {Array.from({ length: numberOfGuesses }, () => (
-      <GuessInput></GuessInput>
-    ))}
-  </div>
-);
-
 export default function GuessGrid(props: GuessGridProps) {
   const { guesses, answer } = props;
+
+  const [active, setActive] = useState(0);
+
   return (
     <div className="guess-grid">
-      <div>{guessBox}</div>
+      <div>
+        {Array.from({ length: numberOfGuesses }, (_, index) => (
+          <GuessInput disabled={index !== active}></GuessInput>
+        ))}
+      </div>
     </div>
   );
 }
