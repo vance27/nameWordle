@@ -18,7 +18,9 @@ export default function GuessGrid(props: GuessGridProps) {
     <div className="guess-grid">
       <div>
         {Array.from({ length: numberOfGuesses }, (_, index) => (
-          <GuessInput disabled={index !== active}></GuessInput>
+          <GuessInput
+            activeRow={index === active}
+          ></GuessInput>
         ))}
       </div>
     </div>
