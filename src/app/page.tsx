@@ -1,34 +1,43 @@
 "use client";
 
-import { useEffect } from "react";
-import { GuessBox } from "./components/guess-box";
+import { createContext, useEffect, useState } from "react";
 import GuessGrid from "./components/guess-grid";
 import Keyboard from "./components/keyboard";
 
 const guessTest = [["C", "A", "L", "L", "U", "M"]];
 
+export type KeyboardButtonStates =
+  | "default"
+  | "selected-right"
+  | "selected-wrong";
+
+const keyboardMap = new Map<string, string>([
+  ["Q", "default"],
+  ["W", "default"],
+  ["E", "default"],
+  ["R", "default"],
+  ["T", "default"],
+  ["Y", "default"],
+  ["U", "default"],
+  ["I", "default"],
+  ["O", "default"],
+  ["P", "default"],
+]);
+
+export const KeyMapContext = createContext<Map<string, string>>(keyboardMap);
+
 export default function Home() {
-  useEffect(() => {
-    const handleKeyDown = (event: any) => {
-      if (event.key === "Escape") {
-        console.log("Escape key pressed");
-        // Perform your desired action here
-      }
-    };
+  const [keyMap, setKeyMap] = useState(keyboardMap);
 
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []); // The empty dependency array ensures the effect runs only once on mount
   return (
     <div>
-      <GuessGrid
-        guesses={guessTest}
-        answer={["C", "A", "L", "L", "U", "M"]}
-      ></GuessGrid>
-      <Keyboard></Keyboard>
+      <KeyMapContext.Provider value={keyMap}>
+        <GuessGrid
+          guesses={guessTest}
+          answer={["C", "A", "L", "L", "U", "M"]}
+        ></GuessGrid>
+        <Keyboard setKeyMap={setKeyMap}></Keyboard>
+      </KeyMapContext.Provider>
     </div>
   );
 }

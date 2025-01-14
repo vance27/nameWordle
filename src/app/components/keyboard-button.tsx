@@ -1,10 +1,3 @@
-import { useState } from "react";
-
-export type KeyboardButtonStates =
-  | "default"
-  | "selected-right"
-  | "selected-wrong";
-
 export default function KeyboardButton(props: any) {
   const { children, state } = props;
 
