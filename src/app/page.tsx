@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import GuessGrid from "./components/guess-grid";
 import Keyboard from "./components/keyboard";
 
@@ -29,6 +29,14 @@ export const KeyMapContext = createContext<Map<string, string>>(keyboardMap);
 export default function Home() {
   const [keyMap, setKeyMap] = useState(keyboardMap);
 
+  const resetKeyboardMap = () => {
+    keyboardMap.forEach((value, key) => {
+      keyboardMap.set(key, "default");
+    });
+    setKeyMap(keyboardMap);
+    console.log("resetting keyboard map", keyboardMap);
+  };
+
   return (
     <div>
       <KeyMapContext.Provider value={keyMap}>
@@ -38,6 +46,7 @@ export default function Home() {
         ></GuessGrid>
         <Keyboard setKeyMap={setKeyMap}></Keyboard>
       </KeyMapContext.Provider>
+      <button onClick={() => resetKeyboardMap()}>reset</button>
     </div>
   );
 }
