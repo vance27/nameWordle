@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import GuessInput from "./guess-input";
+import GuessInput from "./guess-input-old";
 
 type GuessGridProps = {
   guesses: string[][];
