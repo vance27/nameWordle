@@ -4,21 +4,20 @@ import GuessInput from "./guess-input";
 
 type GuessGridProps = {
   guesses: string[][];
-  answer: string[];
+  activeRow: number;
+  activeCol: number;
 };
 
 const numberOfGuesses = 6;
 
 export default function GuessGrid(props: GuessGridProps) {
-  const { guesses, answer } = props;
-
-  const [active, setActive] = useState(0);
+  const { guesses, activeRow, activeCol } = props;
 
   return (
     <div className="guess-grid">
       <div>
         {Array.from({ length: numberOfGuesses }, (_, index) => (
-          <GuessInput activeRow={index === active}></GuessInput>
+          <GuessInput row={index}></GuessInput>
         ))}
       </div>
     </div>

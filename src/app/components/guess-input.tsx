@@ -1,15 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { GuessContext } from "../page";
 
 const numberOfLetters = 6;
 
-interface GuessInputProps {
-  activeRow: boolean;
-}
+export default function GuessInput(props: any) {
+  const { row } = props;
 
-export default function GuessInput(props: GuessInputProps) {
-  const [activeColumn, setActiveColumn] = useState(0);
-
+  const guessContext = useContext(GuessContext);
   return (
     <div>
       {Array.from({ length: numberOfLetters }, (_, index) => (
@@ -25,7 +23,7 @@ export default function GuessInput(props: GuessInputProps) {
           }}
           className="content-center"
         >
-          <div>Content</div>
+          <div>{guessContext?.[row]?.[index]}</div>
         </div>
       ))}
     </div>
