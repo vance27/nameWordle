@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import GuessGrid from "./components/guess-grid";
 import Keyboard from "./components/keyboard";
 
@@ -40,34 +40,38 @@ const defaultKeyboardMap = new Map<string, string>([
 
 const defaultGuesses: string[][] = [[], [], [], [], [], []];
 
-export const KeyMapContext =
-  createContext<Map<string, string>>(defaultKeyboardMap);
-export const GuessContext = createContext<string[][]>(defaultGuesses);
+export const KeyMapContext = createContext<Map<string, string>>(new Map());
+export const GuessContext = createContext<string[][]>([]);
 
 export default function Home() {
-  const [keyMap, setKeyMap] = useState(defaultKeyboardMap);
-  const [guesses, setGuesses] = useState(defaultGuesses);
+  const [keyMap, setKeyMap] = useState(new Map(defaultKeyboardMap));
+  const [guesses, setGuesses] = useState<string[][]>(
+    structuredClone(defaultGuesses)
+  );
+
   const [activeRow, setActiveRow] = useState(0);
   const [activeColumn, setActiveColumn] = useState(0);
 
-  const map = useContext(KeyMapContext);
-  const guess = useContext(GuessContext);
-
-  const resetdefaultKeyboardMap = () => {
-    defaultKeyboardMap.forEach((value, key) => {
-      defaultKeyboardMap.set(key, "default");
-    });
-
-    setGuesses(defaultGuesses);
+  const reset = () => {
+    console.debug("Resetting keyboard map");
+    // Set next guess to the beginning
     setActiveColumn(0);
     setActiveRow(0);
-    setKeyMap(defaultKeyboardMap);
-    console.log("resetting keyboard map", defaultKeyboardMap);
+
+    // Set guesses to a new array of empty arrays
+    console.log("Resetting guesses", defaultGuesses);
+    setGuesses(structuredClone(defaultGuesses));
+
+    // Set the keyboard map to the default map (new map because it needs to be a copy not a reference)
+    setKeyMap(new Map(defaultKeyboardMap));
   };
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
       const key = event.key.toUpperCase();
+      if (guesses === null) {
+        setGuesses(structuredClone(defaultGuesses));
+      }
 
       /**
        * Backspace handler
@@ -76,7 +80,7 @@ export default function Home() {
 
       if (key === "BACKSPACE") {
         console.log("Backspace pressed");
-        if (activeRow < 6) guess[activeRow][activeColumn - 1] = "";
+        if (activeRow < 6) guesses[activeRow][activeColumn - 1] = "";
         if (activeColumn > 0) setActiveColumn(activeColumn - 1);
       }
 
@@ -87,10 +91,10 @@ export default function Home() {
        * IF the row is full, must hit enter.
        */
       if (activeColumn !== 6) {
-        if (map.get(key)) {
+        if (keyMap.get(key)) {
           if (activeRow < 6 && activeColumn < 6) {
             console.log("Key found in map", activeRow, activeColumn);
-            guess[activeRow][activeColumn] = key;
+            guesses[activeRow][activeColumn] = key;
             setActiveColumn(activeColumn + 1);
           } else {
             console.log("Guess grid is full");
@@ -103,9 +107,9 @@ export default function Home() {
           if (true) {
             // THEN
             // UPDATE KEYBOARD
-            const listOfLetters = guess[activeRow];
+            const listOfLetters = guesses[activeRow];
             listOfLetters.forEach(
-              (letter) => setKeyMap(new Map(map.set(letter, "selected-right"))) // TODO update with the right color
+              (letter) => keyMap.set(letter, "selected-right") // TODO update with the right color
             );
           }
 
@@ -123,18 +127,20 @@ export default function Home() {
     };
   }, [activeColumn, activeRow]); // The empty dependency array ensures the effect runs only once on mount
   // TODO unsure about this dependency array (active col and active row makes this run everyt ime they change)
+
   return (
     <div>
-      {/* {guesses.map((guess, index) => (
-        <div >{guess.join(",")}</div>
-      ))} */}
+      {guesses &&
+        guesses.map((guess, index) => (
+          <div key={guess.join("") + index}>{guess.join(",")}</div>
+        ))}
       <KeyMapContext.Provider value={keyMap}>
         <GuessContext.Provider value={guesses}>
           <GuessGrid />
           <Keyboard />
         </GuessContext.Provider>
       </KeyMapContext.Provider>
-      <button onClick={resetdefaultKeyboardMap}>reset</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }

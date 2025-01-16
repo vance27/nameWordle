@@ -37,7 +37,7 @@ export default function GuessGrid() {
                 }}
                 className="content-center"
               >
-                {guessContext[rowIndex][colIndex] || ""}
+                {guessContext ? guessContext[rowIndex][colIndex] : ""}
               </div>
             ))}
           </div>
