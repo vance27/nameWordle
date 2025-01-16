@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext } from "react";
 import { emptyGuess, GuessContext, KeyboardButtonStates } from "../page";
 
 const NUMBER_OF_GUESS = 6;
@@ -9,10 +9,6 @@ export default function GuessGrid(props: any) {
   const guessContext = useContext(GuessContext);
 
   const { activeRow } = props;
-
-  useEffect(() => {
-    console.log("guessContext", guessContext);
-  }, [guessContext]);
 
   const boxColor = (currentRow: number, state: KeyboardButtonStates) => {
     if (activeRow <= currentRow) {
@@ -29,10 +25,10 @@ export default function GuessGrid(props: any) {
   };
 
   return (
-    <div className="guess-grid">
+    <div className=" shrink-0 basis-auto" style={{ padding: "1em" }}>
       <div>
         {Array.from({ length: NUMBER_OF_GUESS }, (_, rowIndex) => (
-          <div key={rowIndex} style={{ display: "block" }}>
+          <div key={rowIndex}>
             {Array.from({ length: WORD_LENGTH }, (_, colIndex) => (
               <div
                 key={rowIndex + "-" + colIndex}
@@ -44,6 +40,7 @@ export default function GuessGrid(props: any) {
                   display: "inline-block",
                   fontSizeAdjust: "1.18",
                   textAlign: "center",
+                  verticalAlign: "top",
                   backgroundColor: boxColor(
                     rowIndex,
                     guessContext[rowIndex][colIndex]?.state

@@ -42,7 +42,7 @@ export interface Guess {
   letter: string;
   state: KeyboardButtonStates;
 }
-export const emptyGuess: Guess = { letter: "", state: "default" };
+export const emptyGuess: Guess = { letter: " ", state: "default" };
 const defaultGuesses: Guess[][] = [
   [emptyGuess],
   [emptyGuess],
@@ -5198,7 +5198,7 @@ export default function Home() {
   const [activeColumn, setActiveColumn] = useState(0);
 
   const reset = () => {
-    console.debug("Resetting keyboard map");
+    console.debug("Resetting next guess");
     // Set next guess to the beginning
     setActiveColumn(0);
     setActiveRow(0);
@@ -5208,6 +5208,7 @@ export default function Home() {
     setGuesses(structuredClone(defaultGuesses));
 
     // Set the keyboard map to the default map (new map because it needs to be a copy not a reference)
+    console.debug("Resetting keyboard map");
     setKeyMap(new Map(defaultKeyboardMap));
   };
 
@@ -5284,17 +5285,15 @@ export default function Home() {
             // THEN
             // UPDATE KEYBOARD
             const listOfLetters = guesses[activeRow];
-            listOfLetters.forEach(
-              (guess: Guess, index) => {
-                if (guess.letter === ANSWER[index]) {
-                  keyMap.set(guess.letter, "selected-right");
-                } else if (ANSWER.includes(guess.letter)) {
-                  if (keyMap.get(guess.letter) !== "selected-right") {
-                    keyMap.set(guess.letter, "selected-wrong");
-                  }
+            listOfLetters.forEach((guess: Guess, index) => {
+              if (guess.letter === ANSWER[index]) {
+                keyMap.set(guess.letter, "selected-right");
+              } else if (ANSWER.includes(guess.letter)) {
+                if (keyMap.get(guess.letter) !== "selected-right") {
+                  keyMap.set(guess.letter, "selected-wrong");
                 }
-              } // TODO update with the right color
-            );
+              }
+            });
           }
 
           // INCREMENT POSITION
@@ -5313,18 +5312,19 @@ export default function Home() {
   // TODO unsure about this dependency array (active col and active row makes this run everyt ime they change)
 
   return (
-    <div>
-      {guesses &&
-        guesses.map((guess, index) => (
-          <div key={guess.join("") + index}>{guess.join(",")}</div>
-        ))}
+    <div className="grid gap-8 grid-cols-1 justify-center justify-items-center content-center items-center place-content-center">
       <KeyMapContext.Provider value={keyMap}>
         <GuessContext.Provider value={guesses}>
           <GuessGrid />
           <Keyboard />
         </GuessContext.Provider>
       </KeyMapContext.Provider>
-      <button onClick={reset}>Reset</button>
+      <button
+        onClick={reset}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+      >
+        Reset
+      </button>
     </div>
   );
 }

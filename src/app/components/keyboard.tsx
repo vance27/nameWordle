@@ -5,8 +5,8 @@ import KeyboardButton from "./keyboard-button";
 export default function Keyboard(props: any) {
   return (
     <>
-      <div className="keyboard">
-        <div className="keyboard-row">
+      <div className="grid justify-center">
+        <div className="justify-self-center">
           <KeyboardButton button={"Q"} />
           <KeyboardButton button={"W"} />
           <KeyboardButton button={"E"} />
@@ -17,7 +17,7 @@ export default function Keyboard(props: any) {
           <KeyboardButton button={"I"} />
           <KeyboardButton button={"O"} />
         </div>
-        <div className="keyboard-row">
+        <div className="justify-self-center ">
           <KeyboardButton button={"A"} />
           <KeyboardButton button={"S"} />
           <KeyboardButton button={"D"} />
@@ -28,7 +28,7 @@ export default function Keyboard(props: any) {
           <KeyboardButton button={"K"} />
           <KeyboardButton button={"L"} />
         </div>
-        <div className="keyboard-row">
+        <div className="justify-self-center ">
           <KeyboardButton button={"Z"} />
           <KeyboardButton button={"X"} />
           <KeyboardButton button={"C"} />

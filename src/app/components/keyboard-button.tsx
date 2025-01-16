@@ -9,15 +9,21 @@ export default function KeyboardButton(props: any) {
     <button
       className="keyboard-button"
       style={{
-        background:
-          map.get(button) === "default"
-            ? "#818384"
-            : map.get(button) === "selected-right"
-            ? "green"
-            : "yellow",
+        margin: ".25em",
       }}
     >
-      <div style={{ outline: "1px red dotted", margin: "2px", padding: "4px" }}>
+      <div
+        style={{
+          padding: "1em",
+          borderRadius: "4px",
+          background:
+            map.get(button) === "default"
+              ? "#818384"
+              : map.get(button) === "selected-right"
+              ? "green"
+              : "yellow",
+        }}
+      >
         {button}
       </div>
     </button>
