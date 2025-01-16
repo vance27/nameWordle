@@ -14,17 +14,18 @@ export default function GuessGrid() {
 
   return (
     <div className="guess-grid">
-      <div>
+      {/* <div>
         MY GUEST CONTEXT{" "}
         {guessContext.map((v) => (
           <div>{v.join("") === "" ? "no content" : v}</div>
         ))}
-      </div>
+      </div> */}
       <div>
         {Array.from({ length: NUMBER_OF_GUESS }, (_, rowIndex) => (
-          <div>
+          <div key={rowIndex} style={{ display: "block" }}>
             {Array.from({ length: WORD_LENGTH }, (_, colIndex) => (
               <div
+                key={rowIndex + "-" + colIndex}
                 style={{
                   outline: "1px solid gray",
                   background: "inherit",

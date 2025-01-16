@@ -57,12 +57,7 @@ export default function Home() {
     defaultKeyboardMap.forEach((value, key) => {
       defaultKeyboardMap.set(key, "default");
     });
-    defaultGuesses.forEach((row) => {
-      row = ["", "", "", "", "", ""];
-    });
-    // guesses.forEach((row) => {
-    //   row = [];
-    // });
+
     setGuesses(defaultGuesses);
     setActiveColumn(0);
     setActiveRow(0);
@@ -130,9 +125,9 @@ export default function Home() {
   // TODO unsure about this dependency array (active col and active row makes this run everyt ime they change)
   return (
     <div>
-      {guesses.map((guess, index) => (
-        <div>{guess.join(",")}</div>
-      ))}
+      {/* {guesses.map((guess, index) => (
+        <div >{guess.join(",")}</div>
+      ))} */}
       <KeyMapContext.Provider value={keyMap}>
         <GuessContext.Provider value={guesses}>
           <GuessGrid />
