@@ -1,23 +1,45 @@
 "use client";
-import { useState } from "react";
-import GuessInput from "./guess-input";
+import { useContext, useEffect, useReducer, useState } from "react";
+import { GuessContext } from "../page";
 
-type GuessGridProps = {
-  guesses: string[][];
-  activeRow: number;
-  activeCol: number;
-};
+const NUMBER_OF_GUESS = 6;
+const WORD_LENGTH = 6;
 
-const numberOfGuesses = 6;
+export default function GuessGrid() {
+  const guessContext = useContext(GuessContext);
 
-export default function GuessGrid(props: GuessGridProps) {
-  const { guesses, activeRow, activeCol } = props;
+  useEffect(() => {
+    console.log("guessContext", guessContext);
+  }, [guessContext]);
 
   return (
     <div className="guess-grid">
       <div>
-        {Array.from({ length: numberOfGuesses }, (_, index) => (
-          <GuessInput row={index}></GuessInput>
+        MY GUEST CONTEXT{" "}
+        {guessContext.map((v) => (
+          <div>{v.join("") === "" ? "no content" : v}</div>
+        ))}
+      </div>
+      <div>
+        {Array.from({ length: NUMBER_OF_GUESS }, (_, rowIndex) => (
+          <div>
+            {Array.from({ length: WORD_LENGTH }, (_, colIndex) => (
+              <div
+                style={{
+                  outline: "1px solid gray",
+                  background: "inherit",
+                  width: "4em",
+                  height: "4em",
+                  display: "inline-block",
+                  // fontSizeAdjust: "1.58", // TODO add this back in
+                  textAlign: "center",
+                }}
+                className="content-center"
+              >
+                {guessContext[rowIndex][colIndex] || ""}
+              </div>
+            ))}
+          </div>
         ))}
       </div>
     </div>
