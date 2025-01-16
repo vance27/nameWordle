@@ -1,25 +1,35 @@
 "use client";
 import { useContext, useEffect, useReducer, useState } from "react";
-import { GuessContext } from "../page";
+import { emptyGuess, GuessContext, KeyboardButtonStates } from "../page";
 
 const NUMBER_OF_GUESS = 6;
 const WORD_LENGTH = 6;
 
-export default function GuessGrid() {
+export default function GuessGrid(props: any) {
   const guessContext = useContext(GuessContext);
+
+  const { activeRow } = props;
 
   useEffect(() => {
     console.log("guessContext", guessContext);
   }, [guessContext]);
 
+  const boxColor = (currentRow: number, state: KeyboardButtonStates) => {
+    if (activeRow <= currentRow) {
+      return "black";
+    }
+    switch (state) {
+      case "selected-right":
+        return "green";
+      case "selected-wrong":
+        return "yellow";
+      default:
+        return "black";
+    }
+  };
+
   return (
     <div className="guess-grid">
-      {/* <div>
-        MY GUEST CONTEXT{" "}
-        {guessContext.map((v) => (
-          <div>{v.join("") === "" ? "no content" : v}</div>
-        ))}
-      </div> */}
       <div>
         {Array.from({ length: NUMBER_OF_GUESS }, (_, rowIndex) => (
           <div key={rowIndex} style={{ display: "block" }}>
@@ -34,10 +44,16 @@ export default function GuessGrid() {
                   display: "inline-block",
                   // fontSizeAdjust: "1.58", // TODO add this back in
                   textAlign: "center",
+                  backgroundColor: boxColor(
+                    rowIndex,
+                    guessContext[rowIndex][colIndex]?.state
+                  ),
                 }}
                 className="content-center"
               >
-                {guessContext ? guessContext[rowIndex][colIndex] : ""}
+                {guessContext
+                  ? guessContext[rowIndex][colIndex]?.letter
+                  : emptyGuess.letter}
               </div>
             ))}
           </div>
