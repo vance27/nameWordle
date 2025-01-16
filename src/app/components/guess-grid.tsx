@@ -42,7 +42,7 @@ export default function GuessGrid(props: any) {
                   width: "4em",
                   height: "4em",
                   display: "inline-block",
-                  // fontSizeAdjust: "1.58", // TODO add this back in
+                  fontSizeAdjust: "1.18",
                   textAlign: "center",
                   backgroundColor: boxColor(
                     rowIndex,

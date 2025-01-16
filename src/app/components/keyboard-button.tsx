@@ -14,7 +14,7 @@ export default function KeyboardButton(props: any) {
             ? "#818384"
             : map.get(button) === "selected-right"
             ? "green"
-            : "red",
+            : "yellow",
       }}
     >
       <div style={{ outline: "1px red dotted", margin: "2px", padding: "4px" }}>

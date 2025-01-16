@@ -5285,7 +5285,15 @@ export default function Home() {
             // UPDATE KEYBOARD
             const listOfLetters = guesses[activeRow];
             listOfLetters.forEach(
-              (guess: Guess) => keyMap.set(guess.letter, "selected-right") // TODO update with the right color
+              (guess: Guess, index) => {
+                if (guess.letter === ANSWER[index]) {
+                  keyMap.set(guess.letter, "selected-right");
+                } else if (ANSWER.includes(guess.letter)) {
+                  if (keyMap.get(guess.letter) !== "selected-right") {
+                    keyMap.set(guess.letter, "selected-wrong");
+                  }
+                }
+              } // TODO update with the right color
             );
           }
 
