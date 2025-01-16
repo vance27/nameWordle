@@ -25,7 +25,7 @@ export default function GuessGrid(props: any) {
   };
 
   return (
-    <div className=" shrink-0 basis-auto" style={{ padding: "1em" }}>
+    <div className=" basis-auto" style={{ padding: "1em" }}>
       <div>
         {Array.from({ length: NUMBER_OF_GUESS }, (_, rowIndex) => (
           <div key={rowIndex}>
@@ -33,11 +33,14 @@ export default function GuessGrid(props: any) {
               <div
                 key={rowIndex + "-" + colIndex}
                 style={{
-                  outline: "1px solid gray",
+                  outline: "2px solid #3a3a3c",
+                  borderRadius: "1px",
                   background: "inherit",
                   width: "4em",
                   height: "4em",
                   display: "inline-block",
+                  margin: ".25em",
+                  //   fontSize: "2em",
                   fontSizeAdjust: "1.18",
                   textAlign: "center",
                   verticalAlign: "top",

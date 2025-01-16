@@ -29,6 +29,7 @@ export default function Keyboard(props: any) {
           <KeyboardButton button={"L"} />
         </div>
         <div className="justify-self-center ">
+          <KeyboardButton button={"ENTER"} />
           <KeyboardButton button={"Z"} />
           <KeyboardButton button={"X"} />
           <KeyboardButton button={"C"} />
@@ -36,6 +37,7 @@ export default function Keyboard(props: any) {
           <KeyboardButton button={"B"} />
           <KeyboardButton button={"N"} />
           <KeyboardButton button={"M"} />
+          <KeyboardButton button={"BACKSPACE"} />
         </div>
       </div>
     </>
