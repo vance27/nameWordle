@@ -2,7 +2,7 @@
 
 import KeyboardButton from "./keyboard-button";
 
-export default function Keyboard(props: any) {
+export default function Keyboard() {
   return (
     <>
       <div className="grid justify-center">

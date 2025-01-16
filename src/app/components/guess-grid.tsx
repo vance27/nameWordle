@@ -1,11 +1,15 @@
 "use client";
 import { useContext } from "react";
-import { emptyGuess, GuessContext, KeyboardButtonStates } from "../page";
+import { emptyGuess, GuessContext, KeyboardButtonStates } from "../types";
 
 const NUMBER_OF_GUESS = 6;
 const WORD_LENGTH = 6;
 
-export default function GuessGrid(props: any) {
+interface GuessGridProps {
+  activeRow: number;
+}
+
+export default function GuessGrid(props: GuessGridProps) {
   const guessContext = useContext(GuessContext);
 
   const { activeRow } = props;

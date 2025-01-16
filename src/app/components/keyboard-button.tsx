@@ -1,7 +1,11 @@
 import { useContext } from "react";
-import { KeyMapContext } from "../page";
+import { KeyMapContext } from "../types";
 
-export default function KeyboardButton(props: any) {
+interface KeyboardButtonProps {
+  button: string;
+}
+
+export default function KeyboardButton(props: KeyboardButtonProps) {
   const { button } = props;
   const map = useContext(KeyMapContext);
 
