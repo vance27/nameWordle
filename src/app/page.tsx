@@ -7,7 +7,6 @@ import {
   defaultKeyboardMap,
   Guess,
   defaultGuesses,
-  MyWordsList,
   ANSWER,
   KeyMapContext,
   GuessContext,
@@ -22,7 +21,7 @@ export default function Home() {
   const [activeRow, setActiveRow] = useState(0);
   const [activeColumn, setActiveColumn] = useState(0);
 
-  const reset = () => {
+  const reset = async () => {
     console.debug("Resetting next guess");
     // Set next guess to the beginning
     setActiveColumn(0);
@@ -41,6 +40,7 @@ export default function Home() {
     const handleKeyDown = (event) => {
       const key = event.key.toUpperCase();
       if (guesses === null) {
+        // TODO investigate why this is needed again
         setGuesses(structuredClone(defaultGuesses));
       }
 
@@ -81,29 +81,6 @@ export default function Home() {
       } else {
         console.log("Row is full");
         if (key === "ENTER") {
-          const word = MyWordsList.find(
-            (v) => v === guesses[activeRow].map((v) => v.letter).join("")
-          );
-          if (word) {
-            console.log("Word is in the list");
-            for (let i = 0; i < 6; i++) {
-              if (guesses[activeRow][i].letter === ANSWER[i]) {
-                console.log(
-                  "Letter is correct",
-                  guesses[activeRow][i].letter,
-                  ANSWER[i]
-                );
-                guesses[activeRow][i].state = "selected-right";
-              } else if (ANSWER.includes(guesses[activeRow][i].letter)) {
-                guesses[activeRow][i].state = "selected-wrong";
-              }
-            }
-
-            alert("Word is in the list");
-          } else {
-            console.log("Word is not in the list");
-            return;
-          }
           // CHECK AGAINST VALID LIST AND PREVIOUS GUESSES
           // TODO submit the result to the backend to check
           if (true) {
