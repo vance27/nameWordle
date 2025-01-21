@@ -32,8 +32,8 @@ export default function KeyboardButton(props: KeyboardButtonProps) {
             button === "BACKSPACE"
               ? "#818384"
               : map.get(button) === "selected-right"
-              ? "green"
-              : "yellow",
+              ? "#538d4e"
+              : "#b59f3b",
         }}
       >
         {button === "ENTER" ? "↵" : button === "BACKSPACE" ? "⌫" : button}

@@ -20,9 +20,9 @@ export default function GuessGrid(props: GuessGridProps) {
     }
     switch (state) {
       case "selected-right":
-        return "green";
+        return "#538d4e";
       case "selected-wrong":
-        return "yellow";
+        return "#b59f3b";
       default:
         return "black";
     }

@@ -5129,13 +5129,17 @@ export const MyWordsList = [
   "ZYGOTE",
 ];
 
-const ANSWER = "CALLUM";
+const ANSWER = "CALLUM"; // TODO
+
+// TODO do the check for two A's even though there is only one. One should appear with yellow on it
 
 async function handler(request: Request) {
-  console.log(request);
+  //   console.log(request);
   // GET word from payload body
-  const inputWord = "6ltrwd";
+  const inputWord = await request.json();
+
   const word = MyWordsList.find((v) => v === inputWord);
+  console.log("found word", word);
   console.log("Hello from check route");
 
   const myArr = [
@@ -5159,10 +5163,14 @@ async function handler(request: Request) {
     console.log("Word is in the list);");
   } else {
     console.log("Word is not in the list");
-    return;
+    return Response.json({ status: 403, message: 'Word not in list"' });
   }
 
-  return Response.json({ status: 200, message: "Hello from check route" });
+  return Response.json({
+    status: 200,
+    message: "Hello from check route",
+    body: myArr,
+  });
 }
 
 export { handler as GET, handler as POST };
