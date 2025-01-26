@@ -1,5 +1,5 @@
 import { KeyboardButtonStates } from "@/app/types";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const MyWordsList = [
   "ABACUS",
@@ -672,6 +672,7 @@ const MyWordsList = [
   "CALMER",
   "CALMLY",
   "CALVES",
+  "CALVIN",
   "CAMELS",
   "CAMERA",
   "CAMPED",
@@ -5134,9 +5135,10 @@ const MyWordsList = [
 
 const ANSWER = "CALLUM"; // TODO
 
-async function handler(request: Request) {
+async function handler(request: NextRequest) {
   // Get the input word from the request
   const inputWord = await request.json();
+  console.log(`${inputWord}`);
   const states: KeyboardButtonStates[] = [
     "default",
     "default",
@@ -5160,9 +5162,7 @@ async function handler(request: Request) {
         states[i] = "selected-wrong";
       }
     }
-    console.log("Word is in the list);");
   } else {
-    console.log("Word is not in the list");
     return NextResponse.json(
       { message: "word not in the list" },
       { status: 400 }
