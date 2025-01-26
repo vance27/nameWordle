@@ -29,7 +29,7 @@ export default function KeyboardButton(props: KeyboardButtonProps) {
               ? "#b59f3b"
               : "#3a3a3c",
         }}
-        className="p-2 rounded-md min-w-8 lg:min-w-12 lg:min-h-14 content-center align-top text-center "
+        className="p-2 rounded-md min-w-8 min-h-12 lg:min-w-12 lg:min-h-14 content-center align-top text-center "
       >
         {button === "ENTER" ? "↵" : button === "BACKSPACE" ? "⌫" : button}
       </div>
