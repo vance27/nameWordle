@@ -44,21 +44,13 @@ export default function GuessGrid(props: GuessGridProps) {
             <div
               key={rowIndex + "-" + colIndex}
               style={{
-                outline: "2px solid #3a3a3c",
-                borderRadius: "1px",
                 outlineColor: borderColor(rowIndex, colIndex),
-                background: "inherit",
-                display: "inline-block",
-                // margin: ".25em",
-                fontSizeAdjust: "1.18",
-                textAlign: "center",
-                verticalAlign: "top",
                 backgroundColor: boxColor(
                   rowIndex,
                   guessContext[rowIndex][colIndex]?.state
                 ),
               }}
-              className="content-center shrink w-12 h-12"
+              className="content-center align-top outline-solid  w-12 h-12 rounded-sm m-1 text-center bg-inherit inline-block text-2xl"
             >
               {guessContext
                 ? guessContext[rowIndex][colIndex]?.letter
