@@ -11,6 +11,7 @@ import {
   GuessContext,
   KeyboardButtonStates,
 } from "./types";
+import { confetti } from "@tsparticles/confetti";
 
 export default function Home() {
   const [keyMap, setKeyMap] = useState(new Map(defaultKeyboardMap));
@@ -51,6 +52,13 @@ export default function Home() {
         console.log("Api check body");
       } else if (res.status === 204) {
         console.log("Received 204 from api check");
+        confetti({})
+          .then((v) => {
+            console.log("Confetti", v);
+          })
+          .catch((v) => {
+            console.log("Confetti error", v);
+          });
         return [
           "selected-right",
           "selected-right",
@@ -153,7 +161,6 @@ export default function Home() {
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
