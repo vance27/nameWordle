@@ -139,6 +139,10 @@ export default function Home() {
                     if (state !== "selected-right") {
                       keyMap.set(letter, guess);
                     }
+                  } else if (guess === "selected-wrong-place") {
+                    if (state === "default") {
+                      keyMap.set(letter, guess);
+                    }
                   } else if (guess === "selected-wrong") {
                     if (state === "default") {
                       keyMap.set(letter, guess);

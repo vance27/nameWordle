@@ -25,7 +25,9 @@ export default function KeyboardButton(props: KeyboardButtonProps) {
               ? "#818384"
               : map.get(button) === "selected-right"
               ? "#538d4e"
-              : "#b59f3b",
+              : map.get(button) === "selected-wrong-place"
+              ? "#b59f3b"
+              : "#3a3a3c",
         }}
         className="p-2 rounded-md min-w-8 lg:min-w-12 lg:min-h-14 content-center align-top text-center "
       >

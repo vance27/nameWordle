@@ -22,7 +22,7 @@ export default function GuessGrid(props: GuessGridProps) {
     switch (state) {
       case "selected-right":
         return "#538d4e";
-      case "selected-wrong":
+      case "selected-wrong-place":
         return "#b59f3b";
       default:
         return "transparent";
@@ -43,7 +43,7 @@ export default function GuessGrid(props: GuessGridProps) {
           {Array.from({ length: WORD_LENGTH }, (_, colIndex) => (
             <div
               key={rowIndex + "-" + colIndex}
-              className="content-center align-top lg:w-16 lg:h-16  w-12 h-12 rounded-sm m-1 text-center bg-inherit inline-block text-3xl"
+              className="content-center align-top lg:w-16 lg:h-16  w-12 h-12 rounded-sm m-1 text-center bg-inherit inline-block text-4xl font-black"
               style={{
                 outline: "2px solid #3a3a3c",
                 outlineColor: borderColor(rowIndex, colIndex),

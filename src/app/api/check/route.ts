@@ -5155,13 +5155,18 @@ async function handler(request: Request) {
       if (inputWord[i] === ANSWER[i]) {
         states[i] = "selected-right";
       } else if (ANSWER.includes(inputWord[i])) {
+        states[i] = "selected-wrong-place";
+      } else {
         states[i] = "selected-wrong";
       }
     }
     console.log("Word is in the list);");
   } else {
     console.log("Word is not in the list");
-    return NextResponse.json({message: 'word not in the list'}, { status: 400 });
+    return NextResponse.json(
+      { message: "word not in the list" },
+      { status: 400 }
+    );
   }
 
   return Response.json({
