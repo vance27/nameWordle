@@ -43,18 +43,28 @@ export default function Home() {
         method: "POST",
         body: JSON.stringify(word),
       });
-      if (res.ok) {
+      if (res.status === 200) {
         const body = await res.json();
         if (body.body) {
           return body.body;
         }
         console.log("Api check body");
+      } else if (res.status === 204) {
+        console.log("Received 204 from api check");
+        return [
+          "selected-right",
+          "selected-right",
+          "selected-right",
+          "selected-right",
+          "selected-right",
+          "selected-right",
+        ];
       } else {
         console.log("Received bad response from api check");
       }
       return undefined;
     } catch (e) {
-      console.error("Caught error in api check ");
+      console.error("Caught error in api check ", e);
       return undefined;
     }
   };
@@ -108,6 +118,7 @@ export default function Home() {
           .then((v) => {
             console.log("api check successful");
             console.log(v);
+            console.log(v.status);
             const guessCheck: KeyboardButtonStates[] = v;
             if (guessCheck) {
               // THEN
@@ -133,7 +144,7 @@ export default function Home() {
             setActiveRow(activeRow + 1);
           })
           .catch((v) => {
-            console.log("api check unsuccessful");
+            console.log("api check unsuccessful", v);
           });
         // TODO submit the result to the backend to check
       }

@@ -7,7 +7,7 @@ export type KeyboardButtonStates =
   | "selected-right"
   | "selected-wrong";
 
-export const defaultKeyboardMap = new Map<string, string>([
+export const defaultKeyboardMap = new Map<string, KeyboardButtonStates>([
   ["Q", "default"],
   ["W", "default"],
   ["E", "default"],
