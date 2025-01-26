@@ -76,20 +76,20 @@ export default function Home() {
   };
 
   const handleKeyDown = (event) => {
+    /**
+     * This is used to prevent the default behavior of the key
+     *
+     * e.g. prevent the reset button from being hit repeatedly by the enter key after the first reset
+     */
     event.preventDefault();
-    if (guesses === null) {
-      // TODO investigate why this is needed again
-      console.log("Guesses is null, resetting");
-      setGuesses(structuredClone(defaultGuesses));
-    }
-    const key = event.key.toUpperCase();
 
     if (!hasWon) {
+      const key = event.key.toUpperCase();
+
       /**
        * Backspace handler
        * Allow user to delete a letter
        */
-
       if (key === "BACKSPACE") {
         console.debug("Backspace pressed");
         if (activeRow < 6)
