@@ -170,11 +170,15 @@ export default function Home() {
   }, [activeColumn, activeRow]);
 
   return (
-    <div className="grid gap-8 grid-cols-1 justify-center justify-items-center content-center items-center place-content-center">
+    <div className="place-content-center min-h-screen flex flex-col justify-center items-center space-y-4 p-8 sm:p-16">
       <KeyMapContext.Provider value={keyMap}>
         <GuessContext.Provider value={guesses}>
-          <GuessGrid activeRow={activeRow} activeColumn={activeColumn} />
-          <Keyboard />
+          <div className="flex justify-center space-x-4">
+            <GuessGrid activeRow={activeRow} activeColumn={activeColumn} />
+          </div>
+          <div className="flex justify-center space-x-4">
+            <Keyboard />
+          </div>
         </GuessContext.Provider>
       </KeyMapContext.Provider>
       <div>
@@ -184,21 +188,15 @@ export default function Home() {
             : ""}
         </p>
       </div>
-      {/* <div>
-        <div>
-          {guesses.map((guess, i) => {
-            const word = guess.map((g) => g.letter);
-            return <div key={i + word.join("")}>{word}</div>;
-          })}
-        </div>
-      </div> */}
-      <button
-        style={{ zIndex: 100 }}
-        onClick={reset}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-      >
-        Reset
-      </button>
+      <div className="flex justify-center space-x-4">
+        <button
+          style={{ zIndex: 100 }}
+          onClick={reset}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        >
+          Reset
+        </button>
+      </div>
       <Confetti hasWon={hasWon} />
     </div>
   );

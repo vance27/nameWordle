@@ -15,16 +15,9 @@ export default function KeyboardButton(props: KeyboardButtonProps) {
   };
 
   return (
-    <button
-      onClick={onClick}
-      className="keyboard-button"
-      style={{
-        margin: ".25em",
-      }}
-    >
+    <button onClick={onClick} className="keyboard-button m-1 flex">
       <div
         style={{
-          padding: "1em",
           borderRadius: "4px",
           background:
             map.get(button) === "default" ||
@@ -35,6 +28,7 @@ export default function KeyboardButton(props: KeyboardButtonProps) {
               ? "#538d4e"
               : "#b59f3b",
         }}
+        className="p-2"
       >
         {button === "ENTER" ? "↵" : button === "BACKSPACE" ? "⌫" : button}
       </div>
