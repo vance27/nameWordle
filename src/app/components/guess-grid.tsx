@@ -7,12 +7,13 @@ const WORD_LENGTH = 6;
 
 interface GuessGridProps {
   activeRow: number;
+  activeColumn: number;
 }
 
 export default function GuessGrid(props: GuessGridProps) {
   const guessContext = useContext(GuessContext);
 
-  const { activeRow } = props;
+  const { activeRow, activeColumn } = props;
 
   const boxColor = (currentRow: number, state: KeyboardButtonStates) => {
     if (activeRow <= currentRow) {
@@ -28,6 +29,13 @@ export default function GuessGrid(props: GuessGridProps) {
     }
   };
 
+  const borderColor = (currentRow: number, currentCol: number) => {
+    if (currentRow === activeRow && currentCol === activeColumn) {
+      return "#97979e";
+    }
+    return "#3a3a3c";
+  };
+
   return (
     <div className=" basis-auto" style={{ padding: "1em" }}>
       <div>
@@ -39,6 +47,7 @@ export default function GuessGrid(props: GuessGridProps) {
                 style={{
                   outline: "2px solid #3a3a3c",
                   borderRadius: "1px",
+                  outlineColor: borderColor(rowIndex, colIndex),
                   background: "inherit",
                   width: "4em",
                   height: "4em",

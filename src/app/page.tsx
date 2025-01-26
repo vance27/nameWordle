@@ -78,6 +78,7 @@ export default function Home() {
   const handleKeyDown = (event) => {
     if (guesses === null) {
       // TODO investigate why this is needed again
+      console.log("Guesses is null, resetting");
       setGuesses(structuredClone(defaultGuesses));
     }
     const key = event.key.toUpperCase();
@@ -101,31 +102,31 @@ export default function Home() {
       /**
        * Key handling (checks if row is full)
        *
+       * Validate key, validate row, validate column
+       *
        * Will handle letters as input
        * IF the row is full, must hit enter.
        */
       if (activeColumn !== 6) {
-        if (keyMap.get(key)) {
-          if (activeRow < 6 && activeColumn < 6) {
-            console.debug("Key found in map", activeRow, activeColumn);
-            guesses[activeRow][activeColumn] = {
-              letter: key,
-              state: "default",
-            };
-            setActiveColumn(activeColumn + 1);
-          } else {
-            console.debug("Guess grid is full");
-          }
+        if (keyMap.get(key) && activeRow < 6 && activeColumn < 6) {
+          console.debug("Key found in map", activeRow, activeColumn);
+          // SET GUESSED LETTER
+          guesses[activeRow][activeColumn] = {
+            letter: key,
+            state: "default",
+          };
+          // INCREMENT POSITION
+          setActiveColumn(activeColumn + 1);
         }
       } else {
         console.debug("Row is full");
         if (key === "ENTER") {
           // CHECK AGAINST VALID LIST AND PREVIOUS GUESSES
-          console.log(guesses[activeRow].map((v) => v.letter).join(""));
-          apiCheck(guesses[activeRow].map((v) => v.letter).join(""))
+          const word = guesses[activeRow].map((v) => v.letter).join("");
+          console.log(word);
+          apiCheck(word)
             .then((v) => {
               const guessCheck: KeyboardButtonStates[] = v;
-              console.log("Guess check", guessCheck);
 
               if (guessCheck && typeof guessCheck !== "string") {
                 // THEN
@@ -144,16 +145,16 @@ export default function Home() {
                   }
                   guesses[activeRow][index].state = guess;
                 });
-                console.log("Guess check2", guessCheck);
                 // INCREMENT POSITION
                 setActiveColumn(0);
                 setActiveRow(activeRow + 1);
+              } else {
+                console.log(`${word} aint a word`);
               }
             })
             .catch((v) => {
               console.debug("api check unsuccessful", v);
             });
-          // TODO submit the result to the backend to check
         }
       }
     }
@@ -171,10 +172,17 @@ export default function Home() {
     <div className="grid gap-8 grid-cols-1 justify-center justify-items-center content-center items-center place-content-center">
       <KeyMapContext.Provider value={keyMap}>
         <GuessContext.Provider value={guesses}>
-          <GuessGrid activeRow={activeRow} />
+          <GuessGrid activeRow={activeRow} activeColumn={activeColumn} />
           <Keyboard />
         </GuessContext.Provider>
       </KeyMapContext.Provider>
+      <div>
+        <p className="text-center">
+          {hasWon
+            ? "Congratulations! You've won! Welcome Callum Brian Vance Jr. Swanson to the world!"
+            : ""}
+        </p>
+      </div>
       <div>
         <div>
           {guesses.map((guess, i) => {
@@ -190,13 +198,6 @@ export default function Home() {
       >
         Reset
       </button>
-      <div>
-        <p className="text-center">
-          {hasWon
-            ? "Congratulations! You've won! Welcome Callum Brian Vance Jr. Swanson to the world!"
-            : ""}
-        </p>
-      </div>
       <Confetti hasWon={hasWon} />
     </div>
   );
