@@ -76,6 +76,7 @@ export default function Home() {
   };
 
   const handleKeyDown = (event) => {
+    event.preventDefault();
     if (guesses === null) {
       // TODO investigate why this is needed again
       console.log("Guesses is null, resetting");
@@ -183,14 +184,14 @@ export default function Home() {
             : ""}
         </p>
       </div>
-      <div>
+      {/* <div>
         <div>
           {guesses.map((guess, i) => {
             const word = guess.map((g) => g.letter);
             return <div key={i + word.join("")}>{word}</div>;
           })}
         </div>
-      </div>
+      </div> */}
       <button
         style={{ zIndex: 100 }}
         onClick={reset}
