@@ -5,7 +5,7 @@ import KeyboardButton from "./keyboard-button";
 export default function Keyboard() {
   return (
     <>
-      <div className="grid justify-center">
+      <div className="grid justify-center" style={{ zIndex: 100 }}>
         <div className="justify-self-center">
           <KeyboardButton button={"Q"} />
           <KeyboardButton button={"W"} />

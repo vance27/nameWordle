@@ -5161,6 +5161,7 @@ async function handler(request: Request) {
     console.log("Word is in the list);");
   } else {
     console.log("Word is not in the list");
+    return NextResponse.json({message: 'word not in the list'}, { status: 400 });
   }
 
   return Response.json({

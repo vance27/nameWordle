@@ -32,6 +32,7 @@ export default function Home() {
     // Set guesses to a new array of empty arrays
     console.debug("Resetting guesses", defaultGuesses);
     setGuesses(structuredClone(defaultGuesses));
+    console.debug("Guesses", guesses);
 
     // Set the keyboard map to the default map (new map because it needs to be a copy not a reference)
     console.debug("Resetting keyboard map");
@@ -49,11 +50,9 @@ export default function Home() {
         body: JSON.stringify(word),
       });
       if (res.status === 200) {
+        console.debug("Received 200 from api check");
         const body = await res.json();
-        if (body.body) {
-          return body.body;
-        }
-        console.debug("Api check body");
+        return body.body;
       } else if (res.status === 204) {
         console.debug("Received 204 from api check");
         setHasWon(true);
@@ -65,8 +64,9 @@ export default function Home() {
           "selected-right",
           "selected-right",
         ];
-      } else {
+      } else if (res.status === 400) {
         console.log("Received bad response from api check");
+        return "not-a-word";
       }
       return undefined;
     } catch (e) {
@@ -121,10 +121,13 @@ export default function Home() {
         console.debug("Row is full");
         if (key === "ENTER") {
           // CHECK AGAINST VALID LIST AND PREVIOUS GUESSES
+          console.log(guesses[activeRow].map((v) => v.letter).join(""));
           apiCheck(guesses[activeRow].map((v) => v.letter).join(""))
             .then((v) => {
               const guessCheck: KeyboardButtonStates[] = v;
-              if (guessCheck) {
+              console.log("Guess check", guessCheck);
+
+              if (guessCheck && typeof guessCheck !== "string") {
                 // THEN
                 // UPDATE KEYBOARD
                 guessCheck.forEach((guess: KeyboardButtonStates, index) => {
@@ -141,11 +144,11 @@ export default function Home() {
                   }
                   guesses[activeRow][index].state = guess;
                 });
+                console.log("Guess check2", guessCheck);
+                // INCREMENT POSITION
+                setActiveColumn(0);
+                setActiveRow(activeRow + 1);
               }
-
-              // INCREMENT POSITION
-              setActiveColumn(0);
-              setActiveRow(activeRow + 1);
             })
             .catch((v) => {
               console.debug("api check unsuccessful", v);
@@ -172,6 +175,14 @@ export default function Home() {
           <Keyboard />
         </GuessContext.Provider>
       </KeyMapContext.Provider>
+      <div>
+        <div>
+          {guesses.map((guess, i) => {
+            const word = guess.map((g) => g.letter);
+            return <div key={i + word.join("")}>{word}</div>;
+          })}
+        </div>
+      </div>
       <button
         style={{ zIndex: 100 }}
         onClick={reset}
@@ -179,6 +190,13 @@ export default function Home() {
       >
         Reset
       </button>
+      <div>
+        <p className="text-center">
+          {hasWon
+            ? "Congratulations! You've won! Welcome Callum Brian Vance Jr. Swanson to the world!"
+            : ""}
+        </p>
+      </div>
       <Confetti hasWon={hasWon} />
     </div>
   );
