@@ -4,6 +4,7 @@ import { useEffect } from "react";
 export default function Confetti(props: { hasWon: boolean }) {
   const { hasWon } = props;
   useEffect(() => {
+    console.log("Has won", hasWon);
     if (!hasWon) {
       return;
     }

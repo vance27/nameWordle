@@ -185,7 +185,7 @@ export default function Home() {
         <p className="text-center">
           {hasWon
             ? "Congratulations! You've won! Welcome Callum Brian Vance Jr. Swanson to the world!"
-            : ""}
+            : "\b"}
         </p>
       </div>
       <div className="flex justify-center space-x-4">
