@@ -15,17 +15,9 @@ export default function KeyboardButton(props: KeyboardButtonProps) {
   };
 
   return (
-    <button
-      onClick={onClick}
-      className="keyboard-button"
-      style={{
-        margin: ".25em",
-      }}
-    >
+    <button onClick={onClick} className="keyboard-button m-1 flex">
       <div
         style={{
-          padding: "1em",
-          borderRadius: "4px",
           background:
             map.get(button) === "default" ||
             button === "ENTER" ||
@@ -33,8 +25,11 @@ export default function KeyboardButton(props: KeyboardButtonProps) {
               ? "#818384"
               : map.get(button) === "selected-right"
               ? "#538d4e"
-              : "#b59f3b",
+              : map.get(button) === "selected-wrong-place"
+              ? "#b59f3b"
+              : "#3a3a3c",
         }}
+        className="p-2 rounded-md min-w-8 min-h-12 lg:min-w-12 lg:min-h-14 content-center align-top text-center "
       >
         {button === "ENTER" ? "↵" : button === "BACKSPACE" ? "⌫" : button}
       </div>

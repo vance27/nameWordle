@@ -1,3 +1,6 @@
+import { KeyboardButtonStates } from "@/app/types";
+import { NextResponse } from "next/server";
+
 export const MyWordsList = [
   "ABACUS",
   "ABASED",
@@ -5131,18 +5134,10 @@ export const MyWordsList = [
 
 const ANSWER = "CALLUM"; // TODO
 
-// TODO do the check for two A's even though there is only one. One should appear with yellow on it
-
 async function handler(request: Request) {
-  //   console.log(request);
-  // GET word from payload body
+  // Get the input word from the request
   const inputWord = await request.json();
-
-  const word = MyWordsList.find((v) => v === inputWord);
-  console.log("found word", word);
-  console.log("Hello from check route");
-
-  const myArr = [
+  const states: KeyboardButtonStates[] = [
     "default",
     "default",
     "default",
@@ -5150,26 +5145,33 @@ async function handler(request: Request) {
     "default",
     "default",
   ];
-  if (word) {
-    console.log("Word is in the list");
+  if (inputWord === ANSWER) {
+    const res = new NextResponse(null, { status: 204 });
+    return res;
+  }
+
+  if (MyWordsList.find((v) => v === inputWord)) {
     for (let i = 0; i < 6; i++) {
       if (inputWord[i] === ANSWER[i]) {
-        console.log("Letter is correct", inputWord[i], ANSWER[i]);
-        myArr[i] = "selected-right";
+        states[i] = "selected-right";
       } else if (ANSWER.includes(inputWord[i])) {
-        myArr[i] = "selected-wrong";
+        states[i] = "selected-wrong-place";
+      } else {
+        states[i] = "selected-wrong";
       }
     }
     console.log("Word is in the list);");
   } else {
     console.log("Word is not in the list");
-    return Response.json({ status: 403, message: 'Word not in list"' });
+    return NextResponse.json(
+      { message: "word not in the list" },
+      { status: 400 }
+    );
   }
 
   return Response.json({
     status: 200,
-    message: "Hello from check route",
-    body: myArr,
+    body: states,
   });
 }
 

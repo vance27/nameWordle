@@ -5,9 +5,10 @@ export const emptyGuess: Guess = { letter: " ", state: "default" };
 export type KeyboardButtonStates =
   | "default"
   | "selected-right"
+  | "selected-wrong-place"
   | "selected-wrong";
 
-export const defaultKeyboardMap = new Map<string, string>([
+export const defaultKeyboardMap = new Map<string, KeyboardButtonStates>([
   ["Q", "default"],
   ["W", "default"],
   ["E", "default"],
