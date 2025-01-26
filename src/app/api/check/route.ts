@@ -1,7 +1,7 @@
 import { KeyboardButtonStates } from "@/app/types";
 import { NextResponse } from "next/server";
 
-export const MyWordsList = [
+const MyWordsList = [
   "ABACUS",
   "ABASED",
   "ABASES",
