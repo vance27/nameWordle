@@ -15,6 +15,7 @@ export default function Keyboard() {
         <KeyboardButton button={"U"} />
         <KeyboardButton button={"I"} />
         <KeyboardButton button={"O"} />
+        <KeyboardButton button={"P"} />
       </div>
       <div className="flex justify-center space-x-2 ">
         <KeyboardButton button={"A"} />
