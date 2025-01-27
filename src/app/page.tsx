@@ -187,9 +187,11 @@ export default function Home() {
       </KeyMapContext.Provider>
       <div>
         <p className="text-center">
-          {hasWon
-            ? "Congratulations! You've won! Welcome Callum Brian Vance Jr. Swanson to the world!"
-            : "\b"}
+          {hasWon ? (
+            "Congratulations! You've won! Welcome Callum Brian Vance Jr. Swanson to the world!"
+          ) : (
+            <span>&nbsp;</span>
+          )}
         </p>
       </div>
       <div className="flex justify-center space-x-4">
