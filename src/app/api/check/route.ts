@@ -5137,7 +5137,7 @@ const ANSWER = "CALLUM"; // TODO
 
 async function handler(request: NextRequest) {
   // Get the input word from the request
-  const inputWord = await request.json();
+  const inputWord: string = await request.json();
   console.log(`${inputWord}`);
   const states: KeyboardButtonStates[] = [
     "default",
@@ -5152,12 +5152,37 @@ async function handler(request: NextRequest) {
     return res;
   }
 
-  if (MyWordsList.find((v) => v === inputWord)) {
+  if (MyWordsList.find((word) => word === inputWord)) {
     for (let i = 0; i < 6; i++) {
       if (inputWord[i] === ANSWER[i]) {
         states[i] = "selected-right";
       } else if (ANSWER.includes(inputWord[i])) {
-        states[i] = "selected-wrong-place";
+        console.log("inputword", inputWord[i]);
+        // Get array of duplicate letters and their index
+        const letters = Array.from(inputWord)
+          .map((letter, ind) => {
+            return { letter, index: ind };
+          })
+          .filter((tuple) => tuple.letter === inputWord[i]);
+
+        // Check the amount repeats of the current letter
+        const repeats = Array.from(ANSWER).filter(
+          (v) => v === inputWord[i]
+        ).length;
+
+        const temp = letters.find(
+          (v) => v.letter === inputWord[i] && v.index === i
+        );
+
+        const temp2 = { letter: inputWord[i], index: i };
+        console.log(letters);
+        console.log(letters.length, repeats, temp, temp2);
+        if (
+          letters.length <= repeats ||
+          (temp && letters.indexOf(temp) < repeats)
+        ) {
+          states[i] = "selected-wrong-place";
+        }
       } else {
         states[i] = "selected-wrong";
       }
