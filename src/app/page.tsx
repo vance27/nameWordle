@@ -22,6 +22,7 @@ export default function Home() {
   const [activeRow, setActiveRow] = useState(0);
   const [activeColumn, setActiveColumn] = useState(0);
   const [hasWon, setHasWon] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const reset = () => {
     console.debug("Resetting next guess");
@@ -51,9 +52,11 @@ export default function Home() {
       });
       if (res.status === 200) {
         console.debug("Received 200 from api check");
+        setErrorMessage("");
         const body = await res.json();
         return body.body;
       } else if (res.status === 204) {
+        setErrorMessage("");
         console.debug("Received 204 from api check");
         setHasWon(true);
         return [
@@ -66,6 +69,7 @@ export default function Home() {
         ];
       } else if (res.status === 400) {
         console.log("Received bad response from api check");
+        setErrorMessage("Invalid word, hit backspace to try again");
         return "not-a-word";
       }
       return undefined;
@@ -192,6 +196,7 @@ export default function Home() {
           ) : (
             <span>&nbsp;</span>
           )}
+          {errorMessage.length ? errorMessage : <span>&nbsp;</span>}
         </p>
       </div>
       <div className="flex justify-center space-x-4">
